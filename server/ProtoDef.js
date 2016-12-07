@@ -5,7 +5,7 @@
  * Date:2016/12/5
  * Time:19:40
  */
-//ProtoDef 客户端-协议配置
+//ProtoDef 服务端-协议配置
 var exports = module.exports;
 var fs = require("fs");
 require("protobufjs");

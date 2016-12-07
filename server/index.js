@@ -1,7 +1,7 @@
 var fs = require("fs");
 var ProtoDef = require("./ProtoDef.js");
 ProtoDef.init();
-ProtoDef.loadProto("./chat.proto");
+ProtoDef.loadProto("./config/chat.proto");
 
 var app = require('express')();
 var http = require('http').Server(app);

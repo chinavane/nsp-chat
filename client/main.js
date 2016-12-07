@@ -8,8 +8,6 @@
 	dx = dc ? dd: db,
 	ec = encodeURIComponent;
 
-	var UserModel;
-
 	w.CHAT = {
 		msgObj:d.getElementById("message"),
 		screenheight:w.innerHeight ? w.innerHeight : dx.clientHeight,
@@ -35,11 +33,10 @@
 						username: this.username
 					},
 					content: content,
-					channelId:1
+					channelId:1		//对应chat.proto 里面的字段channel_id
 				};
 				var buffer = ProtoDef.pack(ProtoDef.MsgType.Message_CS, obj);
 				this.socket.emit('message', buffer);
-				// this.socket.emit('message', obj);
 				d.getElementById("content").value = '';
 			}
 			return false;
@@ -55,7 +52,7 @@
 			var onlineCount = onlineUsers.length;
 			//新加入或者退出的用户信息
 			var user = (action == 'login') ?o.loginuser:o.logoutuser;
-				
+
 			//更新在线人数
 			var userhtml = '';
 			var separator = '';
@@ -107,18 +104,15 @@
 			this.scrollToBottom();
 			
 			//连接websocket后端服务器
-			// this.socket = io.connect('ws://realtime.plhwin.com');
 			this.socket = io.connect('ws://127.0.0.1:3000');
 
 			//告诉服务器端有用户登录
 			var buffer = ProtoDef.pack(ProtoDef.MsgType.Login_CS, {user:{userid:this.userid, username:this.username}});
 			this.socket.emit('login', buffer);
-			// this.socket.emit('login', {userid:this.userid, username:this.username});
-			
+
 			//监听新用户登录
 			this.socket.on('login', function(buffer){
 				var obj = ProtoDef.unpack(ProtoDef.MsgType.Login_SC, buffer);
-				console.log("msg:"+obj);
 				CHAT.updateSysMsg(obj, 'login');
 			});
 			
